@@ -7,21 +7,20 @@ import compression from "compression";
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 
+import productRoutes from "./routes/productRoutes.js";
+
 const app = express();
 
-// Basic config
 const PORT = process.env.PORT || 5000;
 const NODE_ENV = process.env.NODE_ENV || "development";
 
-// Rate limiter (we can tweak later)
 const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP
+  windowMs: 15 * 60 * 1000,
+  max: 100,
   standardHeaders: true,
   legacyHeaders: false,
 });
 
-// Global middlewares
 app.use(helmet());
 app.use(cors({ origin: true, credentials: true }));
 app.use(compression());
@@ -33,19 +32,22 @@ app.use("/api", apiLimiter);
 
 // Health check
 app.get("/health", (req, res) => {
-  res.json({ status: "ok", service: "BACKEND-KANSHA", time: new Date().toISOString() });
+  res.json({
+    status: "ok",
+    service: "BACKEND-KANSHA",
+    time: new Date().toISOString(),
+  });
 });
 
-// TODO: attach routes later
-// import productRoutes from "./routes/productRoutes.js";
-// app.use("/api/products", productRoutes);
+// API routes
+app.use("/api/products", productRoutes);
 
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: "Not found" });
 });
 
-// Global error handler (simple for now)
+// Global error handler
 app.use((err, req, res, next) => {
   console.error("Unhandled error:", err);
   res.status(err.status || 500).json({
