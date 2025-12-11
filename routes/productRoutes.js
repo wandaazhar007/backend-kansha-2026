@@ -1,5 +1,6 @@
 import express from "express";
 import { body, param, query } from "express-validator";
+
 import {
   getProducts,
   getProductById,
@@ -7,6 +8,7 @@ import {
   updateProduct,
   deleteProduct,
 } from "../controllers/productController.js";
+
 import { verifyFirebaseToken } from "../middlewares/authMiddleware.js";
 import { validateRequest } from "../middlewares/validateRequest.js";
 
@@ -26,10 +28,14 @@ const createProductValidators = [
     .withMessage("Category is required")
     .isIn(["hibachi", "sushi", "side", "appetizer"])
     .withMessage("Category must be one of: hibachi, sushi, side, appetizer"),
-  body("imageUrl")
+  body("imageUrls")
+    .optional()
+    .isArray({ min: 1 })
+    .withMessage("imageUrls must be an array with at least one URL"),
+  body("imageUrls.*")
     .optional()
     .isURL()
-    .withMessage("imageUrl must be a valid URL"),
+    .withMessage("Each image URL in imageUrls must be a valid URL"),
   body("isAvailable")
     .optional()
     .isBoolean()
@@ -46,10 +52,14 @@ const updateProductValidators = [
     .optional()
     .isIn(["hibachi", "sushi", "side", "appetizer"])
     .withMessage("Category must be one of: hibachi, sushi, side, appetizer"),
-  body("imageUrl")
+  body("imageUrls")
+    .optional()
+    .isArray()
+    .withMessage("imageUrls must be an array"),
+  body("imageUrls.*")
     .optional()
     .isURL()
-    .withMessage("imageUrl must be a valid URL"),
+    .withMessage("Each image URL in imageUrls must be a valid URL"),
   body("isAvailable")
     .optional()
     .isBoolean()

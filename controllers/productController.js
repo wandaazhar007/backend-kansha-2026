@@ -58,16 +58,18 @@ export async function getProductById(req, res, next) {
 // POST /api/products (admin only)
 export async function createProduct(req, res, next) {
   try {
-    const { name, description, price, category, imageUrl, isAvailable } = req.body;
+    const { name, description, price, category, imageUrls, isAvailable } = req.body;
 
     const now = new Date();
+
+    const normalizedImageUrls = Array.isArray(imageUrls) ? imageUrls : [];
 
     const docRef = await db.collection("products").add({
       name,
       description,
       price: Number(price),
       category,
-      imageUrl: imageUrl || "",
+      imageUrls: normalizedImageUrls,
       isAvailable: typeof isAvailable === "boolean" ? isAvailable : true,
       createdAt: now.toISOString(),
       updatedAt: now.toISOString(),
@@ -86,7 +88,7 @@ export async function createProduct(req, res, next) {
 export async function updateProduct(req, res, next) {
   try {
     const { id } = req.params;
-    const { name, description, price, category, imageUrl, isAvailable } = req.body;
+    const { name, description, price, category, imageUrls, isAvailable } = req.body;
 
     const docRef = db.collection("products").doc(id);
     const doc = await docRef.get();
@@ -105,7 +107,9 @@ export async function updateProduct(req, res, next) {
     if (description !== undefined) updates.description = description;
     if (price !== undefined) updates.price = Number(price);
     if (category !== undefined) updates.category = category;
-    if (imageUrl !== undefined) updates.imageUrl = imageUrl;
+    if (imageUrls !== undefined) {
+      updates.imageUrls = Array.isArray(imageUrls) ? imageUrls : [];
+    }
     if (isAvailable !== undefined) updates.isAvailable = isAvailable;
 
     await docRef.update(updates);
