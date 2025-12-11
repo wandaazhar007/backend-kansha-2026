@@ -8,10 +8,11 @@ import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 
 import productRoutes from "./routes/productRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js"; // 👈 NEW
 
 const app = express();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5012;
 const NODE_ENV = process.env.NODE_ENV || "development";
 
 const apiLimiter = rateLimit({
@@ -41,6 +42,7 @@ app.get("/health", (req, res) => {
 
 // API routes
 app.use("/api/products", productRoutes);
+app.use("/api/categories", categoryRoutes); // 👈 NEW
 
 // 404 handler
 app.use((req, res) => {
