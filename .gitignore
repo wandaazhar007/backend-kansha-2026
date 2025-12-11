@@ -8,4 +8,4 @@
 /.cache/
 /.nuxt/
 /.next/
-/.sass-cache/
+/.sass-cache/node_modules/
