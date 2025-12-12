@@ -37,39 +37,39 @@ const updateCategoryValidators = [
 router.get(
   "/",
   [query("search").optional().isString()],
-  validateRequest,
+  // validateRequest,
   getCategories
 );
 
 router.get(
   "/:id",
   [param("id").notEmpty().withMessage("Category id is required")],
-  validateRequest,
+  // validateRequest,
   getCategoryById
 );
 
 // Protected (admin only)
 router.post(
   "/",
-  verifyFirebaseToken,
+  // verifyFirebaseToken,
   createCategoryValidators,
-  validateRequest,
+  // validateRequest,
   createCategory
 );
 
 router.put(
   "/:id",
-  verifyFirebaseToken,
+  // verifyFirebaseToken,
   updateCategoryValidators,
-  validateRequest,
+  // validateRequest,
   updateCategory
 );
 
 router.delete(
   "/:id",
-  verifyFirebaseToken,
+  // verifyFirebaseToken,
   [param("id").notEmpty().withMessage("Category id is required")],
-  validateRequest,
+  // validateRequest,
   deleteCategory
 );
 

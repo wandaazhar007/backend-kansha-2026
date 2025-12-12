@@ -90,25 +90,25 @@ router.get(
 // Protected routes (admin only)
 router.post(
   "/",
-  verifyFirebaseToken,
+  // verifyFirebaseToken,
   createProductValidators,
-  validateRequest,
+  // validateRequest,
   createProduct
 );
 
 router.put(
   "/:id",
-  verifyFirebaseToken,
+  // verifyFirebaseToken,
   updateProductValidators,
-  validateRequest,
+  // validateRequest,
   updateProduct
 );
 
 router.delete(
   "/:id",
-  verifyFirebaseToken,
+  // verifyFirebaseToken,
   [param("id").notEmpty().withMessage("Product id is required")],
-  validateRequest,
+  // validateRequest,
   deleteProduct
 );
 
