@@ -1,3 +1,5 @@
+//controllers/productController.js
+
 import { db } from "../config/firebaseAdmin.js";
 
 // GET /api/products?category=&search=
