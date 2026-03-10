@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "check": "node --check index.js"
   },
   "keywords": [],
   "author": "",
@@ -17,10 +18,13 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "express-rate-limit": "^8.2.1",
+    "express-rate-limit": "^8.3.0",
     "express-validator": "^7.3.1",
-    "firebase-admin": "^13.6.0",
+    "firebase-admin": "^13.7.0",
     "helmet": "^8.1.0",
     "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }
