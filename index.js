@@ -57,6 +57,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`BACKEND-KANSHA running on port ${PORT} (${NODE_ENV})`);
+// app.listen(PORT, () => {
+//   console.log(`BACKEND-KANSHA running on port ${PORT} (${NODE_ENV})`);
+// });
+
+app.listen(PORT, "127.0.0.1", () => {
+  console.log(`Server BACKEND-KANSHA-API running on http://127.0.0.1:${PORT}`);
 });
